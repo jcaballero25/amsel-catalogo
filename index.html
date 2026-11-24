@@ -135,7 +135,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
       <div class="flex items-center gap-2 text-ivory font-medium">
         <span class="w-2 h-2 rounded-full bg-emeralddeep"></span>
-        <span><strong>Editor AMSEL activo:</strong> Agrega, edita, reordena o respalda tu catálogo sin mensualidades.</span>
+        <span><strong>Editor AMSEL activo:</strong> Agrega, edita, reordena o respalda tu catálogo.</span>
       </div>
       <div class="flex items-center gap-2">
         <button type="button" onclick="openProductModal(null)" class="px-3.5 py-1.5 rounded-full bg-champagne text-obsidian font-bold hover:bg-champagnedark transition">
@@ -348,7 +348,12 @@
         </button>
       </div>
 
+      <div class="px-5 py-3 border-b border-hairline flex items-center justify-between gap-2 bg-surface text-xs">
+        <span id="adminSessionLabel" class="text-mutedstone truncate">Sesión privada activa</span>
+        <button type="button" onclick="signOutAdmin()" class="shrink-0 text-terracotta font-semibold hover:underline">Cerrar sesión</button>
+      </div>
       <div class="flex-1 overflow-y-auto p-5 space-y-6">
+        <button type="button" onclick="downloadPreSyncBackup()" class="w-full py-2 rounded-full border border-hairline text-xs text-ivory">Descargar copia local anterior a la sincronización</button>
         <!-- Acciones rápidas de catálogo y respaldos -->
         <div class="rounded-2xl bg-surface border border-hairline p-4 space-y-3">
           <div class="flex items-center justify-between">
@@ -432,6 +437,27 @@
           <div id="editorItemList" class="space-y-2 max-h-72 overflow-y-auto pr-1"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Acceso privado del administrador -->
+  <div id="adminAuthModal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeAdminAuthModal()"></div>
+    <div class="relative z-10 bg-elevated border border-hairlinestrong rounded-3xl max-w-sm w-full p-6 shadow-boutique space-y-4">
+      <div class="space-y-1">
+        <h2 class="font-serif text-2xl font-semibold text-ivory">Acceso privado AMSEL</h2>
+        <p class="text-xs text-mutedstone leading-relaxed">Inicia sesión con el correo autorizado para guardar cambios en el catálogo compartido.</p>
+      </div>
+      <form onsubmit="signInAdmin(event)" class="space-y-3">
+        <input type="email" id="adminEmail" required autocomplete="email" value="johniscaballero674@gmail.com" class="w-full px-4 py-2.5 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" aria-label="Correo administrador" />
+        <input type="password" id="adminPassword" required autocomplete="current-password" placeholder="Contraseña de Supabase" class="w-full px-4 py-2.5 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" aria-label="Contraseña" />
+        <p id="adminAuthStatus" class="text-xs text-mutedstone leading-relaxed" role="status"></p>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" onclick="signUpAdmin()" class="py-2.5 rounded-full border border-hairline bg-surface text-xs font-semibold text-ivory hover:bg-obsidian">Crear mi acceso</button>
+          <button type="submit" class="py-2.5 rounded-full bg-champagne text-obsidian text-xs font-bold hover:bg-champagnedark">Iniciar sesión</button>
+        </div>
+      </form>
+      <button type="button" onclick="closeAdminAuthModal()" class="w-full py-2 text-xs text-mutedstone hover:text-ivory">Cancelar</button>
     </div>
   </div>
 
@@ -610,7 +636,12 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const AMSEL_SUPABASE_URL = 'https://dasiijpwclerwxowrrvr.supabase.co';
+    const AMSEL_SUPABASE_KEY = 'sb_publishable_yjvKF1Fn4UYVN9SraFJ4yQ_sJM9n_j-';
+    const AMSEL_OWNER_EMAIL = 'johniscaballero674@gmail.com';
+    const amselSupabase = window.supabase?.createClient(AMSEL_SUPABASE_URL, AMSEL_SUPABASE_KEY);
     const STORAGE_KEYS = {
       PRODUCTS: 'amsel_boutique_products_v4',
       SETTINGS: 'amsel_boutique_settings_v4',
@@ -832,7 +863,7 @@
         const rawProducts = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
         if (rawProducts) {
           const parsed = JSON.parse(rawProducts);
-          state.products = Array.isArray(parsed) && parsed.length > 0 ? parsed : [...DEFAULT_PRODUCTS];
+          state.products = Array.isArray(parsed) ? parsed : [...DEFAULT_PRODUCTS];
         } else {
           state.products = [...DEFAULT_PRODUCTS];
         }
@@ -861,20 +892,230 @@
       });
     }
 
-    function saveProducts() {
+    let adminSession = null;
+    let cloudSaveTimer = null;
+    let lastCloudUpdatedAt = null;
+    let cloudSaving = false;
+    let cloudDirty = false;
+    let cloudConflict = false;
+    function cloudStatus(text) {
+      const el = document.getElementById('adminSessionLabel');
+      if (el) el.textContent = text;
+    }
+
+    async function loadCloudCatalog() {
       try {
-        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(state.products));
-      } catch (e) {
-        showToast('No se pudo guardar en el navegador.', 'error');
+        const response = await fetch(`${AMSEL_SUPABASE_URL}/rest/v1/amsel_catalog?select=settings,products,updated_at&id=eq.true`, {
+          headers: { apikey: AMSEL_SUPABASE_KEY, Authorization: `Bearer ${AMSEL_SUPABASE_KEY}` }
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const rows = await response.json();
+        if (!rows.length || !Array.isArray(rows[0].products)) return;
+        if (state.vendorUnlocked) return;
+        const row = rows[0];
+        preservePreSyncBackup();
+        state.settings = { ...DEFAULT_SETTINGS, ...row.settings, pin: state.settings.pin || DEFAULT_SETTINGS.pin };
+        state.products = row.products;
+        lastCloudUpdatedAt = row.updated_at || null;
+        syncCardSizes();
+        saveProductsLocalOnly();
+        saveSettingsLocalOnly();
+        renderBrandTexts();
+        renderSubtypePills();
+        renderProducts();
+        renderCartDrawer();
+      } catch (error) {
+        console.warn('No se pudo actualizar el catálogo compartido:', error);
       }
     }
 
-    function saveSettingsToStorage() {
+    function preservePreSyncBackup() {
       try {
-        localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(state.settings));
-      } catch (e) {
-        showToast('No se pudieron guardar los ajustes.', 'error');
+        const key = 'amsel_backup_antes_de_sincronizacion';
+        if (localStorage.getItem(key)) return;
+        const products = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
+        const settings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+        if (products || settings) localStorage.setItem(key, JSON.stringify({ products: products ? JSON.parse(products) : [], settings: settings ? JSON.parse(settings) : {} }));
+      } catch (error) { console.warn('No se pudo preservar una copia anterior', error); }
+    }
+    function downloadPreSyncBackup() {
+      const backup = localStorage.getItem('amsel_backup_antes_de_sincronizacion');
+      if (!backup) { showToast('No hay copia local anterior en este dispositivo.'); return; }
+      const url = URL.createObjectURL(new Blob([backup], { type: 'application/json' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = 'amsel-copia-local-anterior.json';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      showToast('Copia anterior descargada', 'success');
+    }
+
+    function saveProductsLocalOnly() {
+      try { localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(state.products)); } catch (e) {}
+    }
+    function saveSettingsLocalOnly() {
+      try { localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(state.settings)); } catch (e) {}
+    }
+
+    function queueCloudCatalogSave() {
+      cloudDirty = true;
+      if (!adminSession || !lastCloudUpdatedAt || cloudConflict) {
+        cloudStatus('Sin sincronizar. Verifica tu sesión o recarga el catálogo.');
+        showToast('Los cambios no se han sincronizado. Guarda un respaldo JSON.', 'error');
+        return;
       }
+      cloudStatus('Sincronizando cambios…');
+      clearTimeout(cloudSaveTimer);
+      cloudSaveTimer = setTimeout(saveCloudCatalog, 500);
+    }
+
+    async function saveCloudCatalog() {
+      if (cloudSaving || !cloudDirty || !adminSession || cloudConflict) return;
+      cloudSaving = true;
+      cloudDirty = false;
+      try {
+        const { data: sessionData, error: sessionError } = await amselSupabase.auth.getSession();
+        if (sessionError || !sessionData?.session) throw new Error('Sesión vencida');
+        adminSession = sessionData.session;
+        const { pin, ...publicSettings } = state.settings;
+        const snapshot = JSON.stringify({ settings: publicSettings, products: state.products, updated_at: new Date().toISOString() });
+        const version = encodeURIComponent(lastCloudUpdatedAt);
+        const response = await fetch(`${AMSEL_SUPABASE_URL}/rest/v1/amsel_catalog?id=eq.true&updated_at=eq.${version}&select=updated_at`, {
+          method: 'PATCH',
+          headers: {
+            apikey: AMSEL_SUPABASE_KEY,
+            Authorization: `Bearer ${adminSession.access_token}`,
+            'Content-Type': 'application/json',
+            Prefer: 'return=representation'
+          },
+          body: snapshot
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+        const updated = await response.json();
+        if (updated.length !== 1) {
+          cloudConflict = true;
+          throw new Error('La versión cambió o la cuenta no tiene permiso');
+        }
+        lastCloudUpdatedAt = updated[0].updated_at;
+        if (!cloudDirty) {
+          cloudStatus('Cambios sincronizados');
+          showToast('Cambios compartidos con tus clientes', 'success');
+        }
+      } catch (error) {
+        cloudDirty = true;
+        console.error(error);
+        cloudStatus('No sincronizado: descarga un respaldo JSON antes de recargar.');
+        showToast('No se guardó en línea. Descarga un respaldo JSON.', 'error');
+      } finally {
+        cloudSaving = false;
+      }
+      if (cloudDirty && !cloudConflict && adminSession) {
+        clearTimeout(cloudSaveTimer);
+        cloudSaveTimer = setTimeout(saveCloudCatalog, 15000);
+      }
+    }
+
+    function showAdminAuthStatus(message, isError = false) {
+      const el = document.getElementById('adminAuthStatus');
+      if (!el) return;
+      el.textContent = message;
+      el.className = `text-xs leading-relaxed ${isError ? 'text-terracotta' : 'text-mutedstone'}`;
+    }
+
+    function openAdminAuthModal() {
+      const modal = document.getElementById('adminAuthModal');
+      document.getElementById('adminEmail').value = AMSEL_OWNER_EMAIL;
+      document.getElementById('adminPassword').value = '';
+      showAdminAuthStatus('La contraseña se envía directamente a Supabase; no la compartas por chat.');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function closeAdminAuthModal() {
+      const modal = document.getElementById('adminAuthModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function finishAdminLogin(session) {
+      if (!session?.user || session.user.email?.toLowerCase() !== AMSEL_OWNER_EMAIL) {
+        await amselSupabase.auth.signOut();
+        adminSession = null;
+        showAdminAuthStatus('Ese correo no está autorizado para administrar AMSEL.', true);
+        return false;
+      }
+      if (!lastCloudUpdatedAt) { showAdminAuthStatus('No se pudo cargar el catálogo en línea. Revisa tu conexión y vuelve a intentar.', true); return false; }
+      adminSession = session;
+      closeAdminAuthModal();
+      state.vendorUnlocked = true;
+      syncVendorUI();
+      renderProducts();
+      cloudStatus('Acceso autorizado; catálogo sincronizado');
+      populateSettingsForm();
+      renderEditorItemList();
+      const drawer = document.getElementById('editorDrawer');
+      drawer.classList.remove('hidden');
+      drawer.classList.add('flex');
+      showToast('Acceso privado confirmado', 'success');
+      return true;
+    }
+
+    async function signInAdmin(event) {
+      event.preventDefault();
+      if (!amselSupabase) { showAdminAuthStatus('No se pudo cargar el servicio de acceso.', true); return; }
+      const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+      const password = document.getElementById('adminPassword').value;
+      showAdminAuthStatus('Verificando acceso…');
+      const { data, error } = await amselSupabase.auth.signInWithPassword({ email, password });
+      if (error) { showAdminAuthStatus(error.message, true); return; }
+      await finishAdminLogin(data.session);
+    }
+
+    async function signUpAdmin() {
+      if (!amselSupabase) { showAdminAuthStatus('No se pudo cargar el servicio de acceso.', true); return; }
+      const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+      const password = document.getElementById('adminPassword').value;
+      if (email !== AMSEL_OWNER_EMAIL) { showAdminAuthStatus('Usa el correo autorizado que aparece en el formulario.', true); return; }
+      if (password.length < 12) { showAdminAuthStatus('Crea una contraseña de al menos 12 caracteres.', true); return; }
+      showAdminAuthStatus('Creando el acceso seguro…');
+      const { data, error } = await amselSupabase.auth.signUp({ email, password, options: { emailRedirectTo: location.origin + location.pathname } });
+      if (error) { showAdminAuthStatus(error.message, true); return; }
+      if (data.session) { await finishAdminLogin(data.session); }
+      else { showAdminAuthStatus('Revisa tu correo y confirma la cuenta. Después vuelve aquí e inicia sesión.'); }
+    }
+
+    async function signOutAdmin() {
+      if (cloudDirty || cloudSaving) { showToast('Hay cambios sin sincronizar. Descarga un respaldo antes de salir.', 'error'); return; }
+      if (amselSupabase) await amselSupabase.auth.signOut();
+      adminSession = null;
+      state.vendorUnlocked = false;
+      closeEditorDrawer();
+      syncVendorUI();
+      renderProducts();
+      showToast('Sesión cerrada');
+    }
+
+    async function initializeCloudCatalog() {
+      if (amselSupabase) {
+        const { data } = await amselSupabase.auth.getSession();
+        const session = data?.session;
+        if (session?.user?.email?.toLowerCase() === AMSEL_OWNER_EMAIL) adminSession = session;
+        amselSupabase.auth.onAuthStateChange((_event, newSession) => {
+          adminSession = newSession?.user?.email?.toLowerCase() === AMSEL_OWNER_EMAIL ? newSession : null;
+        });
+      }
+      await loadCloudCatalog();
+      setInterval(loadCloudCatalog, 15000);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) loadCloudCatalog(); });
+    }
+
+    function saveProducts() {
+      try { localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(state.products)); }
+      catch (e) { showToast('No se pudo guardar en el navegador.', 'error'); }
+      queueCloudCatalogSave();
+    }
+
+    function saveSettingsToStorage() {
+      try { localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(state.settings)); }
+      catch (e) { showToast('No se pudieron guardar los ajustes.', 'error'); }
+      queueCloudCatalogSave();
     }
 
     function saveCartToStorage() {
@@ -1583,8 +1824,13 @@
       const currentPin = String(state.settings.pin || DEFAULT_SETTINGS.pin).trim();
 
       if (entered === currentPin) {
-        state.vendorUnlocked = true;
+        if (!lastCloudUpdatedAt) { showToast('No se pudo cargar el catálogo en línea. Revisa tu conexión.', 'error'); return; }
         closePinModal();
+        if (!adminSession) {
+          openAdminAuthModal();
+          return;
+        }
+        state.vendorUnlocked = true;
         syncVendorUI();
         renderProducts();
         openEditorDrawer();
@@ -1603,10 +1849,9 @@
     }
 
     function openEditorDrawer() {
-      if (!state.vendorUnlocked) {
-        openPinModal();
-        return;
-      }
+      if (!lastCloudUpdatedAt) { showToast('No se pudo cargar el catálogo compartido. Revisa tu conexión.', 'error'); return; }
+      if (!adminSession) { openAdminAuthModal(); return; }
+      if (!state.vendorUnlocked) { openPinModal(); return; }
       populateSettingsForm();
       renderEditorItemList();
       const drawer = document.getElementById('editorDrawer');
@@ -1672,7 +1917,7 @@
       renderBrandTexts();
       renderProducts();
       renderCartDrawer();
-      showToast('Ajustes de AMSEL guardados', 'success');
+      showToast('Ajustes listos; sincronizando…');
     }
 
     function renderEditorItemList() {
@@ -1865,7 +2110,7 @@
           };
           state.cardSizes[existingId] = finalSizes[0];
         }
-        showToast('Pieza actualizada', 'success');
+        showToast('Pieza actualizada; sincronizando…');
       } else {
         const newId = `amsel-${Date.now()}`;
         state.products.unshift({
@@ -1883,7 +2128,7 @@
           available,
         });
         state.cardSizes[newId] = finalSizes[0];
-        showToast('Pieza agregada', 'success');
+        showToast('Pieza lista; sincronizando…');
       }
 
       saveProducts();
@@ -1899,7 +2144,7 @@
       renderSubtypePills();
       renderProducts();
       renderEditorItemList();
-      showToast('Pieza eliminada');
+      showToast('Pieza eliminada; sincronizando…');
     }
 
     function resetDemoCatalog() {
@@ -1913,7 +2158,7 @@
       renderSubtypePills();
       renderProducts();
       renderEditorItemList();
-      showToast('Catálogo demo restaurado', 'success');
+      showToast('Catálogo demo restaurado; sincronizando…');
     }
 
     // =========================================================================
@@ -1959,7 +2204,7 @@
           renderSubtypePills();
           renderProducts();
           renderEditorItemList();
-          showToast('Respaldo JSON importado', 'success');
+          showToast('Respaldo importado; sincronizando…');
         } catch (err) {
           showToast('Archivo JSON no válido.', 'error');
         }
@@ -2027,6 +2272,7 @@
       renderProducts();
       renderCartDrawer();
       syncVendorUI();
+      initializeCloudCatalog();
     });
   </script>
 </body>
