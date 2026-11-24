@@ -92,7 +92,7 @@
   <!-- Encabezado Boutique AMSEL -->
   <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-md border-b border-hairline">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-      <a href="#" class="flex items-center gap-3 min-w-0 group">
+      <a href="#" onclick="handleBrandSecretTap(event)" class="flex items-center gap-3 min-w-0 group" aria-label="AMSEL">
         <div id="brandMonogramBox" class="w-9 h-9 rounded-full border border-hairlinestrong bg-elevated text-champagne flex items-center justify-center font-serif italic font-semibold text-base shrink-0 group-hover:border-champagne transition">
           <span id="brandMonogram">Am</span>
         </div>
@@ -113,18 +113,6 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
           </svg>
           <span class="hidden md:inline">Compartir</span>
-        </button>
-
-        <button
-          id="vendorToggleBtn"
-          type="button"
-          onclick="handleVendorButtonClick()"
-          class="px-3 sm:px-3.5 py-2 rounded-full border border-emeralddeep/40 bg-emeraldsoft hover:border-emeralddeep active:scale-[0.98] transition text-ivory text-xs font-semibold flex items-center gap-1.5"
-        >
-          <svg class="w-3.5 h-3.5 text-emeralddeep" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-          </svg>
-          <span id="vendorBtnLabel">Editor AMSEL</span>
         </button>
 
         <button
@@ -453,7 +441,7 @@
     <div class="relative z-10 bg-elevated border border-hairlinestrong rounded-3xl max-w-sm w-full p-6 shadow-boutique space-y-4">
       <div class="space-y-1">
         <h2 class="font-serif text-2xl font-semibold text-ivory">Acceso Editor AMSEL</h2>
-        <p class="text-xs text-mutedstone leading-relaxed">Ingresa tu PIN para administrar el catálogo. (PIN inicial: <span class="font-mono font-bold text-champagne">1234</span>)</p>
+        <p class="text-xs text-mutedstone leading-relaxed">Ingresa tu PIN para administrar el catálogo.</p>
       </div>
       <form onsubmit="verifyPinSubmit(event)" class="space-y-3">
         <input
@@ -606,7 +594,7 @@
       </div>
 
       <p class="text-xs text-mutedstone leading-relaxed">
-        Comparte este enlace o descarga el archivo HTML / respaldo JSON desde el <strong class="text-ivory">Editor AMSEL</strong> para alojarlo gratis sin mensualidades en GitHub Pages o Cloudflare Pages.
+        Comparte este enlace para que tus clientes puedan ver el catálogo y hacer sus pedidos.
       </p>
 
       <div class="flex gap-2">
@@ -1550,6 +1538,22 @@
     // =========================================================================
     // EDITOR AMSEL: PIN, CAJÓN DE GESTIÓN, REORDENAR, CRUD Y RESPALDOS
     // =========================================================================
+    let adminLogoTapCount = 0;
+    let adminLogoTapTimer = null;
+
+    function handleBrandSecretTap(event) {
+      event.preventDefault();
+      adminLogoTapCount += 1;
+      clearTimeout(adminLogoTapTimer);
+      adminLogoTapTimer = setTimeout(() => { adminLogoTapCount = 0; }, 1800);
+      if (adminLogoTapCount >= 5) {
+        adminLogoTapCount = 0;
+        clearTimeout(adminLogoTapTimer);
+        if (state.vendorUnlocked) openEditorDrawer();
+        else openPinModal();
+      }
+    }
+
     function handleVendorButtonClick() {
       if (state.vendorUnlocked) {
         openEditorDrawer();
@@ -1629,16 +1633,13 @@
     function syncVendorUI() {
       const banner = document.getElementById('vendorActiveBanner');
       const hint = document.getElementById('vendorStockHint');
-      const label = document.getElementById('vendorBtnLabel');
 
       if (state.vendorUnlocked) {
         banner.classList.remove('hidden');
         hint.classList.remove('hidden');
-        label.textContent = 'Estudio AMSEL';
       } else {
         banner.classList.add('hidden');
         hint.classList.add('hidden');
-        label.textContent = 'Editor AMSEL';
       }
     }
 
