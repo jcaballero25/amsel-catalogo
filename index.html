@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMSEL — Catálogo de personalizados</title>
+  <meta name="description" content="Descubre ropa, tazas y accesorios personalizados de AMSEL. Explora el catálogo y realiza tu pedido." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AMSEL — Catálogo de personalizados" />
+  <meta property="og:description" content="Ropa, tazas y accesorios con un toque personal. Explora el catálogo AMSEL y realiza tu pedido." />
+  <meta name="twitter:card" content="summary" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Manrope"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            obsidian: '#F8F4EE',
+            elevated: '#FFFCF8',
+            surface: '#F0E8DE',
+            hairline: 'rgba(69, 52, 43, 0.12)',
+            hairlinestrong: 'rgba(192, 103, 78, 0.30)',
+            ivory: '#302923',
+            mutedstone: '#786F67',
+            champagne: '#C66B4E',
+            champagnedark: '#A94F38',
+            emeralddeep: '#718A72',
+            emeraldsoft: 'rgba(113, 138, 114, 0.14)',
+            terracotta: '#A94F38',
+            terracottasoft: 'rgba(169, 79, 56, 0.13)',
+            sapphire: '#7788A1',
+            sapphiresoft: 'rgba(119, 136, 161, 0.14)',
+          },
+          boxShadow: {
+            boutique: '0 24px 55px -28px rgba(88, 58, 43, 0.24)',
+            card: '0 12px 28px -18px rgba(88, 58, 43, 0.20)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --amsel-accent: #C66B4E;
+      --amsel-accent-soft: rgba(198, 107, 78, 0.14);
+      --amsel-accent-border: rgba(198, 107, 78, 0.32);
+    }
+    html {
+      scroll-behavior: smooth;
+      background-color: #F8F4EE;
+      color: #302923;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .modal-backdrop {
+      background-color: rgba(45, 35, 29, 0.48);
+      backdrop-filter: blur(7px);
+    }
+    body {
+      background-image: radial-gradient(ellipse at 12% 0%, rgba(198,107,78,.08), transparent 34%),
+                        radial-gradient(ellipse at 88% 18%, rgba(113,138,114,.07), transparent 30%);
+      background-attachment: fixed;
+    }
+    header { box-shadow: 0 8px 24px rgba(78, 55, 42, .045); }
+    #heroTitle { text-wrap: balance; }
+    #heroSubtitle { text-wrap: pretty; }
+    article { transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+    article:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -22px rgba(88,58,43,.34); }
+    input, textarea, select { color-scheme: light; }
+    .modal-backdrop { background-color: rgba(45, 35, 29, .48); backdrop-filter: blur(7px); }
+    ::selection { background: rgba(198,107,78,.22); color: #302923; }
+
+  </style>
+</head>
+<body class="bg-obsidian text-ivory font-sans antialiased min-h-screen flex flex-col selection:bg-champagne/25 selection:text-ivory overflow-x-hidden">
+
+  <!-- Notificaciones flotantes -->
+  <div id="toastContainer" class="fixed top-4 right-4 z-[95] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- Encabezado Boutique AMSEL -->
+  <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-md border-b border-hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <a href="#" class="flex items-center gap-3 min-w-0 group">
+        <div id="brandMonogramBox" class="w-9 h-9 rounded-full border border-hairlinestrong bg-elevated text-champagne flex items-center justify-center font-serif italic font-semibold text-base shrink-0 group-hover:border-champagne transition">
+          <span id="brandMonogram">Am</span>
+        </div>
+        <div class="truncate">
+          <span id="headerBrandName" class="block font-serif text-xl sm:text-2xl font-semibold tracking-tight text-ivory leading-none">AMSEL</span>
+          <span id="headerTagline" class="hidden sm:block text-[11px] text-mutedstone tracking-wide mt-0.5">Atelier de ropa, tazas y piezas personalizadas</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <button
+          type="button"
+          onclick="openShareModal()"
+          class="p-2.5 sm:px-3.5 sm:py-2 rounded-full border border-hairline bg-elevated hover:border-hairlinestrong active:scale-[0.98] transition text-ivory text-xs font-semibold flex items-center gap-1.5"
+          title="Compartir o publicar gratis"
+        >
+          <svg class="w-4 h-4 text-champagne" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          </svg>
+          <span class="hidden md:inline">Compartir</span>
+        </button>
+
+        <button
+          id="vendorToggleBtn"
+          type="button"
+          onclick="handleVendorButtonClick()"
+          class="px-3 sm:px-3.5 py-2 rounded-full border border-emeralddeep/40 bg-emeraldsoft hover:border-emeralddeep active:scale-[0.98] transition text-ivory text-xs font-semibold flex items-center gap-1.5"
+        >
+          <svg class="w-3.5 h-3.5 text-emeralddeep" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          <span id="vendorBtnLabel">Editor AMSEL</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="openCartDrawer()"
+          class="px-3.5 sm:px-4 py-2 rounded-full bg-champagne hover:bg-champagnedark active:scale-[0.98] transition text-obsidian text-xs font-bold flex items-center gap-2 shadow-card"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="hidden sm:inline">Bolsa</span>
+          <span id="cartCountBadge" class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-obsidian text-champagne font-extrabold text-[11px]">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Barra de estado cuando el Editor AMSEL está abierto -->
+  <div id="vendorActiveBanner" class="hidden bg-emeraldsoft border-b border-emeralddeep/35">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div class="flex items-center gap-2 text-ivory font-medium">
+        <span class="w-2 h-2 rounded-full bg-emeralddeep"></span>
+        <span><strong>Editor AMSEL activo:</strong> Agrega, edita, reordena o respalda tu catálogo sin mensualidades.</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="openProductModal(null)" class="px-3.5 py-1.5 rounded-full bg-champagne text-obsidian font-bold hover:bg-champagnedark transition">
+          + Nueva pieza
+        </button>
+        <button type="button" onclick="openEditorDrawer()" class="px-3.5 py-1.5 rounded-full bg-elevated border border-hairline text-ivory font-semibold hover:border-hairlinestrong transition">
+          Abrir estudio
+        </button>
+        <button type="button" onclick="lockVendorMode()" class="px-3 py-1.5 rounded-full bg-surface border border-hairline text-mutedstone font-semibold hover:text-ivory transition">
+          Salir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+
+    <!-- Hero Editorial Boutique -->
+    <section class="relative overflow-hidden rounded-[1.5rem] bg-elevated border border-hairline px-5 py-6 sm:px-8 sm:py-8 lg:px-10 shadow-card">
+      <div class="relative max-w-4xl space-y-3">
+        <div class="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-champagne">
+          AMSEL <span class="text-mutedstone">/</span> Personalizados
+        </div>
+
+        <h1 id="heroTitle" class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-ivory leading-[1.04] max-w-3xl">
+          Hecho para ti.
+        </h1>
+
+        <p id="heroSubtitle" class="text-sm sm:text-base text-mutedstone max-w-xl leading-relaxed">
+          Ropa, tazas y accesorios con un toque personal.
+        </p>
+
+        <div class="pt-1 flex flex-wrap items-center gap-2">
+          <button type="button" onclick="jumpToLine('Ropa')" class="px-4 py-2 rounded-full bg-champagne hover:bg-champagnedark text-obsidian font-bold text-xs sm:text-sm transition">
+            Ropa
+          </button>
+          <button type="button" onclick="jumpToLine('Tazas')" class="px-4 py-2 rounded-full bg-surface hover:bg-obsidian border border-hairline text-ivory font-semibold text-xs sm:text-sm transition">
+            Tazas
+          </button>
+          <button type="button" onclick="jumpToLine('Accesorios')" class="px-4 py-2 rounded-full bg-surface hover:bg-obsidian border border-hairline text-mutedstone hover:text-ivory font-semibold text-xs sm:text-sm transition">
+            Accesorios
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel de Filtros, Subtipos, Búsqueda y Orden -->
+    <section id="catalogoSection" class="space-y-7">
+      <div class="bg-elevated border border-hairline rounded-3xl p-4 sm:p-5 shadow-card space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div id="categoryTabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
+            <button type="button" data-category="Todo" onclick="selectCategory('Todo')" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition bg-ivory text-obsidian">
+              Todo
+            </button>
+            <button type="button" data-category="Ropa" onclick="selectCategory('Ropa')" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition bg-surface text-ivory border border-hairline hover:border-champagne/50">
+              Ropa
+            </button>
+            <button type="button" data-category="Tazas" onclick="selectCategory('Tazas')" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition bg-surface text-ivory border border-hairline hover:border-sapphire/50">
+              Tazas
+            </button>
+            <button type="button" data-category="Accesorios" onclick="selectCategory('Accesorios')" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition bg-surface text-ivory border border-hairline hover:border-emeralddeep/50">
+              Accesorios
+            </button>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto">
+            <div class="relative flex-1 sm:w-64">
+              <input
+                type="search"
+                id="searchInput"
+                oninput="renderProducts()"
+                placeholder="Buscar prenda, taza, estilo..."
+                class="w-full pl-9 pr-4 py-2 rounded-full bg-obsidian border border-hairline text-xs sm:text-sm text-ivory placeholder:text-mutedstone/70 focus:outline-none focus:border-champagne"
+              />
+              <svg class="w-4 h-4 text-mutedstone absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+
+            <select
+              id="sortSelect"
+              onchange="renderProducts()"
+              class="px-3.5 py-2 rounded-full bg-obsidian border border-hairline text-xs sm:text-sm font-semibold text-ivory focus:outline-none focus:border-champagne"
+            >
+              <option value="featured">Destacados</option>
+              <option value="price-asc">Menor precio</option>
+              <option value="price-desc">Mayor precio</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="subtypeFilterBar" class="pt-3.5 border-t border-hairline flex flex-wrap items-center gap-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-mutedstone mr-1">Tipo:</span>
+          <div id="subtypePillsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar"></div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-mutedstone px-1">
+        <span id="productsCountText" class="font-medium">Mostrando piezas</span>
+        <span id="vendorStockHint" class="hidden text-emeralddeep font-semibold">Editor activo: usa los controles en cada pieza o abre el estudio AMSEL.</span>
+      </div>
+
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
+
+      <div id="emptyState" class="hidden rounded-3xl bg-elevated border border-hairline p-10 text-center space-y-2.5 shadow-card">
+        <p class="font-serif text-2xl font-semibold text-ivory">Sin piezas para este filtro</p>
+        <p class="text-sm text-mutedstone">Cambia de categoría, tipo de pieza o limpia la búsqueda.</p>
+        <button type="button" onclick="clearFilters()" class="mt-2 px-5 py-2.5 rounded-full bg-champagne text-obsidian text-xs font-bold hover:bg-champagnedark transition">
+          Restablecer catálogo
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="bg-elevated border-t border-hairline mt-16 py-7">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-mutedstone">
+      <div class="flex items-center gap-2">
+        <span id="footerBrandName" class="font-serif text-base font-semibold text-ivory">AMSEL</span>
+        <span>• Ropa, tazas y piezas personalizadas.</span>
+      </div>
+      <div>
+        Pedidos directos por WhatsApp • Propiedad y control 100% tuyos.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Inspección / Detalle de Producto -->
+  <div id="quickViewModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-backdrop fixed inset-0" onclick="closeQuickView()"></div>
+    <div id="quickViewContent" class="relative z-10 bg-elevated border border-hairlinestrong rounded-3xl max-w-2xl w-full p-5 sm:p-7 shadow-boutique my-8 max-h-[90vh] overflow-y-auto"></div>
+  </div>
+
+  <!-- Cajón lateral de la Bolsa de Compras -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+    <div class="modal-backdrop absolute inset-0" onclick="closeCartDrawer()"></div>
+    <div class="relative z-10 ml-auto h-full max-w-md w-full bg-elevated border-l border-hairline shadow-2xl flex flex-col">
+      <div class="px-5 py-4 border-b border-hairline flex items-center justify-between bg-obsidian">
+        <div>
+          <h2 class="font-serif text-2xl font-semibold text-ivory leading-tight">Tu Bolsa AMSEL</h2>
+          <p class="text-xs text-mutedstone">Revisa variantes y envía por WhatsApp</p>
+        </div>
+        <button type="button" onclick="closeCartDrawer()" class="p-2 rounded-full bg-elevated hover:bg-surface text-mutedstone hover:text-ivory transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+
+      <div id="cartCheckoutBox" class="border-t border-hairline p-5 bg-surface space-y-3.5">
+        <div class="space-y-2.5">
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Tu nombre *</label>
+            <input type="text" id="customerName" placeholder="Ej. Valentina Gómez" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory placeholder:text-mutedstone/60 focus:outline-none focus:border-champagne" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Notas de envío o personalización general</label>
+            <input type="text" id="customerNote" placeholder="Ej. Ciudad de entrega, empaque de regalo..." class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory placeholder:text-mutedstone/60 focus:outline-none focus:border-champagne" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-hairline">
+          <span class="text-sm font-medium text-mutedstone">Subtotal</span>
+          <span id="cartSubtotalText" class="text-lg font-extrabold text-champagne">COP $0</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button
+            type="button"
+            onclick="copyOrderSummary()"
+            class="py-2.5 px-3.5 rounded-full bg-elevated hover:bg-obsidian border border-hairline text-ivory font-semibold text-xs transition flex items-center justify-center gap-1.5"
+          >
+            <svg class="w-4 h-4 text-champagne" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span>Copiar resumen</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="sendOrderViaWhatsApp()"
+            class="py-2.5 px-4 rounded-full bg-champagne hover:bg-champagnedark active:scale-[0.99] text-obsidian font-bold text-xs transition flex items-center justify-center gap-1.5"
+          >
+            <span>Pedir por WhatsApp</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cajón / Estudio del Editor AMSEL -->
+  <div id="editorDrawer" class="fixed inset-0 z-50 hidden">
+    <div class="modal-backdrop absolute inset-0" onclick="closeEditorDrawer()"></div>
+    <div class="relative z-10 ml-auto h-full max-w-xl w-full bg-elevated border-l border-hairlinestrong shadow-2xl flex flex-col">
+      <div class="px-5 py-4 border-b border-hairline flex items-center justify-between bg-obsidian">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-emeralddeep">Estudio de Gestión</span>
+          <h2 class="font-serif text-2xl font-semibold text-ivory leading-tight">Editor AMSEL</h2>
+        </div>
+        <button type="button" onclick="closeEditorDrawer()" class="p-2 rounded-full bg-elevated hover:bg-surface text-mutedstone hover:text-ivory transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-5 space-y-6">
+        <!-- Acciones rápidas de catálogo y respaldos -->
+        <div class="rounded-2xl bg-surface border border-hairline p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-champagne">Piezas, promociones y respaldos</h3>
+            <button type="button" onclick="openProductModal(null)" class="px-3.5 py-1.5 rounded-full bg-champagne hover:bg-champagnedark text-obsidian text-xs font-bold transition">
+              + Nueva pieza
+            </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <button type="button" onclick="exportCatalogJson()" class="py-2 px-3 rounded-xl bg-elevated hover:bg-obsidian border border-hairline text-xs font-semibold text-ivory transition">
+              Exportar JSON
+            </button>
+            <button type="button" onclick="downloadHtmlBackup()" class="py-2 px-3 rounded-xl bg-elevated hover:bg-obsidian border border-emeralddeep/40 text-xs font-semibold text-emeralddeep transition">
+              Descargar HTML
+            </button>
+            <label class="py-2 px-3 rounded-xl bg-elevated hover:bg-obsidian border border-hairline text-xs font-semibold text-ivory text-center cursor-pointer transition col-span-2 sm:col-span-1">
+              Importar JSON
+              <input type="file" id="importJsonInput" accept=".json,application/json" class="hidden" onchange="handleImportJson(event)" />
+            </label>
+          </div>
+        </div>
+
+        <!-- Ajustes de marca y tono de acento -->
+        <form id="storeSettingsForm" onsubmit="saveStoreSettings(event)" class="rounded-2xl bg-surface border border-hairline p-4 space-y-3.5">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-champagne">Identidad y Tono de Marca</h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-ivory mb-1">Nombre de marca</label>
+              <input type="text" id="settingBrandName" required class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-ivory mb-1">WhatsApp (con código país)</label>
+              <input type="text" id="settingWhatsapp" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-ivory mb-1">Prefijo moneda</label>
+              <input type="text" id="settingCurrency" required class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-ivory mb-1">PIN (4+ dígitos)</label>
+              <input type="text" id="settingPin" required minlength="4" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-ivory mb-1">Acento editorial</label>
+              <select id="settingAccentMood" onchange="previewAccentMoodSelection()" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne">
+                <option value="champagne">Champán &amp; Latón (#D4A373)</option>
+                <option value="emerald">Esmeralda Profundo (#2E8B6B)</option>
+                <option value="terracotta">Terracota Boutique (#C85A32)</option>
+                <option value="sapphire">Zafiro Nocturno (#5B8DEF)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Eslogan superior</label>
+            <input type="text" id="settingTagline" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Mensaje principal</label>
+            <textarea id="settingSubtitle" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 rounded-full bg-emeralddeep hover:opacity-95 text-ivory text-xs font-bold transition">
+            Guardar ajustes de marca
+          </button>
+        </form>
+
+        <!-- Lista compacta para reordenar, editar o eliminar -->
+        <div class="rounded-2xl bg-surface border border-hairline p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-champagne">Orden y Gestión Rápida</h3>
+            <button type="button" onclick="resetDemoCatalog()" class="text-[11px] text-terracotta hover:underline font-semibold">
+              Restaurar demo
+            </button>
+          </div>
+          <div id="editorItemList" class="space-y-2 max-h-72 overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal PIN Editor AMSEL -->
+  <div id="pinModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closePinModal()"></div>
+    <div class="relative z-10 bg-elevated border border-hairlinestrong rounded-3xl max-w-sm w-full p-6 shadow-boutique space-y-4">
+      <div class="space-y-1">
+        <h2 class="font-serif text-2xl font-semibold text-ivory">Acceso Editor AMSEL</h2>
+        <p class="text-xs text-mutedstone leading-relaxed">Ingresa tu PIN para administrar el catálogo. (PIN inicial: <span class="font-mono font-bold text-champagne">1234</span>)</p>
+      </div>
+      <form onsubmit="verifyPinSubmit(event)" class="space-y-3">
+        <input
+          type="password"
+          id="pinInput"
+          inputmode="numeric"
+          required
+          placeholder="••••"
+          class="w-full px-4 py-2.5 rounded-xl bg-obsidian border border-hairline text-center text-base tracking-widest font-bold text-ivory focus:outline-none focus:border-champagne"
+        />
+        <p id="pinErrorText" class="hidden text-xs text-terracotta font-semibold text-center">PIN incorrecto. Intenta nuevamente.</p>
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="closePinModal()" class="flex-1 py-2.5 rounded-full border border-hairline bg-surface text-xs font-semibold text-mutedstone hover:text-ivory">
+            Cancelar
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-full bg-champagne text-obsidian text-xs font-bold hover:bg-champagnedark">
+            Entrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Crear / Editar Pieza -->
+  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-backdrop fixed inset-0" onclick="closeProductModal()"></div>
+    <div class="relative z-10 bg-elevated border border-hairlinestrong rounded-3xl max-w-lg w-full p-6 shadow-boutique my-8 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <h2 id="productModalTitle" class="font-serif text-2xl font-semibold text-ivory">Nueva Pieza</h2>
+        <button type="button" onclick="closeProductModal()" class="p-1.5 rounded-full hover:bg-surface text-mutedstone hover:text-ivory">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="productForm" onsubmit="saveProductSubmit(event)" class="space-y-3.5">
+        <input type="hidden" id="prodId" />
+
+        <div>
+          <label class="block text-xs font-semibold text-ivory mb-1">Nombre de la pieza *</label>
+          <input type="text" id="prodName" required placeholder="Ej. Hoodie Oversize Champán AMSEL" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Categoría *</label>
+            <select id="prodCategory" onchange="syncSubtypeSuggestions()" required class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne">
+              <option value="Ropa">Ropa</option>
+              <option value="Tazas">Tazas</option>
+              <option value="Accesorios">Accesorios</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Subtipo *</label>
+            <input type="text" id="prodSubtype" list="subtypeDatalist" required placeholder="Camisetas, Hoodies, Clásicas, Mágicas..." class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+            <datalist id="subtypeDatalist"></datalist>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Precio (COP) *</label>
+            <input type="number" id="prodPrice" required min="0" step="any" placeholder="85000" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Etiqueta</label>
+            <select id="prodBadge" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne">
+              <option value="">Ninguna</option>
+              <option value="Nuevo">Nuevo</option>
+              <option value="Personalizable">Personalizable</option>
+              <option value="Destacado">Destacado</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-ivory mb-1">Color de acento</label>
+            <select id="prodAccent" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne">
+              <option value="champagne">Champán</option>
+              <option value="emerald">Esmeralda</option>
+              <option value="terracotta">Terracota</option>
+              <option value="sapphire">Zafiro</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-ivory mb-1">Tallas o acabados (separados por coma)</label>
+          <input type="text" id="prodSizes" value="S, M, L, XL" placeholder="S, M, L, XL o 11 oz, 15 oz" class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne" />
+        </div>
+
+        <!-- Imagen subida por archivo, cámara o URL -->
+        <div class="space-y-2 rounded-2xl bg-surface border border-hairline p-3.5">
+          <div class="flex items-center justify-between gap-2">
+            <label class="block text-xs font-semibold text-ivory">Fotografía o ilustración</label>
+            <div class="flex items-center gap-1.5">
+              <label class="px-2.5 py-1 rounded-full bg-elevated border border-hairline hover:border-champagne text-[11px] font-semibold text-ivory cursor-pointer">
+                Subir foto
+                <input type="file" id="prodFileInput" accept="image/*" class="hidden" onchange="handleProductImageFile(event)" />
+              </label>
+              <label class="px-2.5 py-1 rounded-full bg-elevated border border-hairline hover:border-champagne text-[11px] font-semibold text-ivory cursor-pointer">
+                Cámara
+                <input type="file" id="prodCameraInput" accept="image/*" capture="environment" class="hidden" onchange="handleProductImageFile(event)" />
+              </label>
+            </div>
+          </div>
+
+          <input type="text" id="prodImage" placeholder="URL de imagen o foto subida desde el dispositivo" class="w-full px-3 py-2 rounded-xl bg-obsidian border border-hairline text-xs text-ivory focus:outline-none focus:border-champagne" />
+
+          <div class="flex flex-wrap gap-1.5 pt-0.5">
+            <button type="button" onclick="applyPresetVisual('tee-ivory')" class="px-2.5 py-1 rounded-full bg-elevated hover:bg-obsidian border border-hairline text-[11px] text-mutedstone hover:text-ivory">SVG Camiseta</button>
+            <button type="button" onclick="applyPresetVisual('hoodie-emerald')" class="px-2.5 py-1 rounded-full bg-elevated hover:bg-obsidian border border-hairline text-[11px] text-mutedstone hover:text-ivory">SVG Hoodie</button>
+            <button type="button" onclick="applyPresetVisual('mug-champagne')" class="px-2.5 py-1 rounded-full bg-elevated hover:bg-obsidian border border-hairline text-[11px] text-mutedstone hover:text-ivory">SVG Taza</button>
+            <button type="button" onclick="applyPresetVisual('accessory-key')" class="px-2.5 py-1 rounded-full bg-elevated hover:bg-obsidian border border-hairline text-[11px] text-mutedstone hover:text-ivory">SVG Accesorio</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-ivory mb-1">Descripción</label>
+          <textarea id="prodDescription" rows="2" placeholder="Detalles de tela, corte, cerámica o personalización..." class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-sm text-ivory focus:outline-none focus:border-champagne"></textarea>
+        </div>
+
+        <label class="flex items-center gap-2 text-xs font-semibold text-ivory cursor-pointer">
+          <input type="checkbox" id="prodAvailable" checked class="rounded border-hairline bg-obsidian text-champagne focus:ring-champagne" />
+          <span>Disponible en tienda</span>
+        </label>
+
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeProductModal()" class="flex-1 py-2.5 rounded-full border border-hairline bg-surface text-xs font-semibold text-mutedstone hover:text-ivory">
+            Cancelar
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-full bg-champagne text-obsidian text-xs font-bold hover:bg-champagnedark">
+            Guardar pieza
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Compartir y Publicar Gratis -->
+  <div id="shareModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeShareModal()"></div>
+    <div class="relative z-10 bg-elevated border border-hairlinestrong rounded-3xl max-w-md w-full p-6 shadow-boutique space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-serif text-2xl font-semibold text-ivory">Compartir y Publicar</h2>
+        <button type="button" onclick="closeShareModal()" class="p-1.5 rounded-full hover:bg-surface text-mutedstone hover:text-ivory">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-mutedstone leading-relaxed">
+        Comparte este enlace o descarga el archivo HTML / respaldo JSON desde el <strong class="text-ivory">Editor AMSEL</strong> para alojarlo gratis sin mensualidades en GitHub Pages o Cloudflare Pages.
+      </p>
+
+      <div class="flex gap-2">
+        <input type="text" id="shareUrlInput" readonly class="flex-1 px-3 py-2 rounded-xl bg-obsidian border border-hairline text-xs text-ivory" />
+        <button type="button" onclick="copyShareLink()" class="px-4 py-2 rounded-full bg-champagne text-obsidian text-xs font-bold hover:bg-champagnedark shrink-0">
+          Copiar
+        </button>
+      </div>
+
+      <button type="button" onclick="closeShareModal()" class="w-full py-2.5 rounded-full bg-surface hover:bg-obsidian border border-hairline text-ivory text-xs font-semibold transition">
+        Cerrar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      PRODUCTS: 'amsel_boutique_products_v4',
+      SETTINGS: 'amsel_boutique_settings_v4',
+      CART: 'amsel_boutique_cart_v4',
+    };
+
+    const ACCENT_MOODS = {
+      champagne: { hex: '#C66B4E', soft: 'rgba(198, 107, 78, 0.14)', border: 'rgba(198, 107, 78, 0.34)' },
+      emerald: { hex: '#718A72', soft: 'rgba(113, 138, 114, 0.14)', border: 'rgba(113, 138, 114, 0.34)' },
+      terracotta: { hex: '#A94F38', soft: 'rgba(169, 79, 56, 0.13)', border: 'rgba(169, 79, 56, 0.32)' },
+      sapphire: { hex: '#7788A1', soft: 'rgba(119, 136, 161, 0.14)', border: 'rgba(119, 136, 161, 0.32)' },
+    };
+
+    const SUBTYPES_BY_CATEGORY = {
+      Ropa: ['Camisetas', 'Hoodies', 'Oversize', 'Básicas'],
+      Tazas: ['Clásicas', 'Mágicas', 'Sublimación', 'Sets'],
+      Accesorios: ['Llaveros', 'Bolsas y Detalles'],
+    };
+
+    const DEFAULT_SETTINGS = {
+      brandName: 'AMSEL',
+      tagline: 'Ropa, tazas y accesorios personalizados',
+      whatsapp: '',
+      currency: 'COP $',
+      pin: '1234',
+      accentMood: 'champagne',
+      subtitle: 'Ropa, tazas y accesorios con un toque personal.'
+    };
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: 'amsel-b1',
+        name: 'Camiseta Algodón Pesado Marfil',
+        category: 'Ropa',
+        subtype: 'Camisetas',
+        badge: 'Destacado',
+        accent: 'champagne',
+        price: 75000,
+        sizes: ['S', 'M', 'L', 'XL'],
+        image: '',
+        preset: 'tee-ivory',
+        description: 'Tejido de algodón peinado de alto gramaje, cuello rib firme y acabado limpio para uso diario.',
+        available: true,
+      },
+      {
+        id: 'amsel-b2',
+        name: 'Hoodie Atelier Esmeralda',
+        category: 'Ropa',
+        subtype: 'Hoodies',
+        badge: 'Nuevo',
+        accent: 'emerald',
+        price: 145000,
+        sizes: ['S', 'M', 'L', 'XL'],
+        image: '',
+        preset: 'hoodie-emerald',
+        description: 'Buzo con capucha estructurada, interior suave y costuras reforzadas en tonos oscuros.',
+        available: true,
+      },
+      {
+        id: 'amsel-b3',
+        name: 'Camiseta Oversize Caída Noble',
+        category: 'Ropa',
+        subtype: 'Oversize',
+        badge: 'Nuevo',
+        accent: 'terracotta',
+        price: 84000,
+        sizes: ['S', 'M', 'L', 'XL'],
+        image: '',
+        preset: 'tee-ivory',
+        description: 'Silueta relajada de hombros caídos con diseño tipográfico sobrio al frente y dorso.',
+        available: true,
+      },
+      {
+        id: 'amsel-b4',
+        name: 'Básica Esencial Cuello Redondo',
+        category: 'Ropa',
+        subtype: 'Básicas',
+        badge: '',
+        accent: 'champagne',
+        price: 62000,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        image: '',
+        preset: 'tee-ivory',
+        description: 'Prenda esencial versátil que conserva su estructura tras múltiples lavadas.',
+        available: true,
+      },
+      {
+        id: 'amsel-b5',
+        name: 'Taza Clásica Cerámica Champán',
+        category: 'Tazas',
+        subtype: 'Clásicas',
+        badge: 'Personalizable',
+        accent: 'champagne',
+        price: 36000,
+        sizes: ['11 oz', '15 oz'],
+        image: '',
+        preset: 'mug-champagne',
+        description: 'Cerámica de brillo suave con espacio para nombre, frase corta o detalle personalizado.',
+        available: true,
+      },
+      {
+        id: 'amsel-b6',
+        name: 'Taza Mágica Revelación Nocturna',
+        category: 'Tazas',
+        subtype: 'Mágicas',
+        badge: 'Personalizable',
+        accent: 'sapphire',
+        price: 48000,
+        sizes: ['11 oz'],
+        image: '',
+        preset: 'mug-champagne',
+        description: 'Acabado oscuro elegante que revela el diseño o dedicatoria al contacto con bebidas calientes.',
+        available: true,
+      },
+      {
+        id: 'amsel-b7',
+        name: 'Taza Sublimación Alta Definición',
+        category: 'Tazas',
+        subtype: 'Sublimación',
+        badge: 'Personalizable',
+        accent: 'terracotta',
+        price: 42000,
+        sizes: ['11 oz', '15 oz'],
+        image: '',
+        preset: 'mug-champagne',
+        description: 'Color intenso y nítido para ilustraciones, marcas o regalos con identidad propia.',
+        available: true,
+      },
+      {
+        id: 'amsel-b8',
+        name: 'Set Regalo Taza + Llavero AMSEL',
+        category: 'Accesorios',
+        subtype: 'Llaveros',
+        badge: 'Destacado',
+        accent: 'emerald',
+        price: 54000,
+        sizes: ['Set Único', 'Llavero Suelto'],
+        image: '',
+        preset: 'accessory-key',
+        description: 'Conjunto listo para obsequio con herraje metálico y cinta tejida de alta resistencia.',
+        available: true,
+      },
+    ];
+
+    let state = {
+      products: [],
+      settings: { ...DEFAULT_SETTINGS },
+      cart: [],
+      selectedCategory: 'Todo',
+      selectedSubtype: 'Todos',
+      vendorUnlocked: false,
+      cardSizes: {},
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatMoney(amount) {
+      const numeric = Number(amount) || 0;
+      const prefix = (state.settings.currency || 'COP $').trim();
+      const formatted = numeric.toLocaleString('es-CO', {
+        maximumFractionDigits: Number.isInteger(numeric) ? 0 : 2,
+      });
+      return `${prefix} ${formatted}`;
+    }
+
+    function getDiscountPercent(product) {
+      const pct = Math.round(Number(product?.discountPercent) || 0);
+      return pct > 0 && pct < 100 ? pct : 0;
+    }
+
+    function getProductPrice(product) {
+      const price = Number(product?.price) || 0;
+      const pct = getDiscountPercent(product);
+      return pct ? Math.round(price * (100 - pct) / 100) : price;
+    }
+
+    function renderProductPrice(product) {
+      const pct = getDiscountPercent(product);
+      if (!pct) return `<span class="text-sm font-extrabold text-ivory">${formatMoney(product.price)}</span>`;
+      return `<span class="text-right leading-tight"><span class="block text-[10px] text-mutedstone line-through">${formatMoney(product.price)}</span><span class="text-sm font-extrabold text-terracotta">${formatMoney(getProductPrice(product))}</span><span class="block text-[10px] font-extrabold text-terracotta">-${pct}%</span></span>`;
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      const styleClass =
+        type === 'error'
+          ? 'bg-terracotta text-ivory border-terracotta'
+          : type === 'success'
+          ? 'bg-emeralddeep text-ivory border-emeralddeep'
+          : 'bg-elevated text-ivory border-hairlinestrong';
+
+      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl border shadow-boutique text-xs sm:text-sm font-semibold transition ${styleClass}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.remove(), 220);
+      }, 2700);
+    }
+
+    function loadInitialState() {
+      try {
+        const rawSettings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+        if (rawSettings) state.settings = { ...DEFAULT_SETTINGS, ...JSON.parse(rawSettings) };
+      } catch (e) {
+        state.settings = { ...DEFAULT_SETTINGS };
+      }
+
+      try {
+        const rawProducts = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
+        if (rawProducts) {
+          const parsed = JSON.parse(rawProducts);
+          state.products = Array.isArray(parsed) && parsed.length > 0 ? parsed : [...DEFAULT_PRODUCTS];
+        } else {
+          state.products = [...DEFAULT_PRODUCTS];
+        }
+      } catch (e) {
+        state.products = [...DEFAULT_PRODUCTS];
+      }
+
+      try {
+        const rawCart = localStorage.getItem(STORAGE_KEYS.CART);
+        if (rawCart) {
+          const parsedCart = JSON.parse(rawCart);
+          if (Array.isArray(parsedCart)) state.cart = parsedCart;
+        }
+      } catch (e) {
+        state.cart = [];
+      }
+
+      syncCardSizes();
+    }
+
+    function syncCardSizes() {
+      state.products.forEach((p) => {
+        if (!state.cardSizes[p.id]) {
+          state.cardSizes[p.id] = (p.sizes && p.sizes[0]) || 'Única';
+        }
+      });
+    }
+
+    function saveProducts() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(state.products));
+      } catch (e) {
+        showToast('No se pudo guardar en el navegador.', 'error');
+      }
+    }
+
+    function saveSettingsToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(state.settings));
+      } catch (e) {
+        showToast('No se pudieron guardar los ajustes.', 'error');
+      }
+    }
+
+    function saveCartToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(state.cart));
+      } catch (e) {}
+    }
+
+    function applyAccentMood(moodKey) {
+      const mood = ACCENT_MOODS[moodKey] || ACCENT_MOODS.champagne;
+      document.documentElement.style.setProperty('--amsel-accent', mood.hex);
+      document.documentElement.style.setProperty('--amsel-accent-soft', mood.soft);
+      document.documentElement.style.setProperty('--amsel-accent-border', mood.border);
+
+      const monoBox = document.getElementById('brandMonogramBox');
+      if (monoBox) {
+        monoBox.style.color = mood.hex;
+        monoBox.style.borderColor = mood.border;
+      }
+    }
+
+    function previewAccentMoodSelection() {
+      const sel = document.getElementById('settingAccentMood');
+      if (sel) applyAccentMood(sel.value);
+    }
+
+    function renderBrandTexts() {
+      const name = (state.settings.brandName || 'AMSEL').trim();
+      const tagline = (state.settings.tagline || DEFAULT_SETTINGS.tagline).trim();
+      const subtitle = (state.settings.subtitle || DEFAULT_SETTINGS.subtitle).trim();
+      const monogram = name.slice(0, 2) || 'Am';
+
+      document.title = `${name} — Ropa, Tazas y Piezas Personalizadas`;
+      document.getElementById('brandMonogram').textContent = monogram;
+      document.getElementById('headerBrandName').textContent = name;
+      document.getElementById('headerTagline').textContent = tagline;
+      document.getElementById('footerBrandName').textContent = name;
+      document.getElementById('heroSubtitle').textContent = subtitle;
+      applyAccentMood(state.settings.accentMood);
+    }
+
+    function getCategoryTagClasses(category) {
+      if (category === 'Ropa') return 'bg-champagne/15 text-champagne border-champagne/30';
+      if (category === 'Tazas') return 'bg-sapphiresoft text-sapphire border-sapphire/30';
+      if (category === 'Accesorios') return 'bg-emeraldsoft text-emeralddeep border-emeralddeep/35';
+      return 'bg-surface text-ivory border-hairline';
+    }
+
+    function getBadgeClasses(badge) {
+      if (badge === 'Nuevo') return 'bg-emeralddeep text-ivory';
+      if (badge === 'Personalizable') return 'bg-sapphire text-obsidian';
+      if (badge === 'Destacado') return 'bg-champagne text-obsidian';
+      return 'bg-obsidian text-ivory';
+    }
+
+    function getAvailableSubtypesForCategory(category) {
+      if (category && SUBTYPES_BY_CATEGORY[category]) {
+        const base = SUBTYPES_BY_CATEGORY[category];
+        const extra = state.products
+          .filter((p) => p.category === category && p.subtype)
+          .map((p) => p.subtype.trim());
+        return ['Todos', ...Array.from(new Set([...base, ...extra]))];
+      }
+      const all = state.products.map((p) => (p.subtype || '').trim()).filter(Boolean);
+      return ['Todos', ...Array.from(new Set(all))];
+    }
+
+    function renderSubtypePills() {
+      const container = document.getElementById('subtypePillsContainer');
+      const subtypes = getAvailableSubtypesForCategory(state.selectedCategory);
+      if (!subtypes.includes(state.selectedSubtype)) {
+        state.selectedSubtype = 'Todos';
+      }
+
+      container.innerHTML = subtypes
+        .map((sub) => {
+          const active = state.selectedSubtype === sub;
+          return `
+            <button
+              type="button"
+              onclick="selectSubtype('${escapeHtml(sub)}')"
+              class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition ${
+                active
+                  ? 'bg-champagne text-obsidian'
+                  : 'bg-obsidian text-mutedstone border border-hairline hover:text-ivory'
+              }"
+            >
+              ${escapeHtml(sub)}
+            </button>
+          `;
+        })
+        .join('');
+    }
+
+    function selectCategory(category) {
+      state.selectedCategory = category;
+      state.selectedSubtype = 'Todos';
+
+      document.querySelectorAll('.category-btn').forEach((btn) => {
+        const cat = btn.getAttribute('data-category');
+        const active = cat === category;
+        btn.className = active
+          ? 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition bg-ivory text-obsidian'
+          : 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition bg-surface text-ivory border border-hairline hover:border-champagne/40';
+      });
+
+      renderSubtypePills();
+      renderProducts();
+    }
+
+    function selectSubtype(subtype) {
+      state.selectedSubtype = subtype;
+      renderSubtypePills();
+      renderProducts();
+    }
+
+    function jumpToLine(category) {
+      selectCategory(category);
+      const sec = document.getElementById('catalogoSection');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function clearFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('sortSelect').value = 'featured';
+      selectCategory('Todo');
+    }
+
+    // Ilustraciones SVG de estudio enmarcadas sin recorte
+    function renderProductArtwork(product) {
+      if (product.image && product.image.trim() !== '') {
+        const safeUrl = escapeHtml(product.image.trim());
+        const fallback = `https://placehold.co/640x760/161B22/D4A373?text=${encodeURIComponent(product.name)}`;
+        return `<img src="${safeUrl}" alt="${escapeHtml(product.name)}" onerror="this.onerror=null;this.src='${fallback}';" class="w-full h-full object-cover" />`;
+      }
+
+      const brand = escapeHtml((state.settings.brandName || 'AMSEL').toUpperCase());
+      const preset = product.preset || (product.category === 'Tazas' ? 'mug-champagne' : product.category === 'Accesorios' ? 'accessory-key' : 'tee-ivory');
+
+      if (preset === 'hoodie-emerald') {
+        return `
+          <div class="w-full h-full bg-gradient-to-b from-[#F1E9DF] to-[#E6DED4] flex flex-col items-center justify-center p-6">
+            <svg viewBox="0 0 220 220" class="w-44 h-44" aria-hidden="true">
+              <path d="M74 36 Q110 18 146 36 L156 50 L194 78 L172 110 L150 94 L150 188 L70 188 L70 94 L48 110 L26 78 L64 50 Z" fill="#2E8B6B" stroke="#F5F2EB" stroke-opacity="0.35" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M84 38 Q110 56 136 38" fill="none" stroke="#F5F2EB" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="101" y1="47" x2="101" y2="74" stroke="#F5F2EB" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="119" y1="47" x2="119" y2="74" stroke="#F5F2EB" stroke-width="1.8" stroke-linecap="round"/>
+              <text x="110" y="106" text-anchor="middle" fill="#F5F2EB" font-family="Georgia, serif" font-style="italic" font-size="15" font-weight="bold">${brand}</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-emeralddeep font-semibold mt-1">${escapeHtml(product.subtype || 'Hoodie')}</span>
+          </div>
+        `;
+      }
+
+      if (preset === 'mug-champagne') {
+        return `
+          <div class="w-full h-full bg-gradient-to-b from-[#F3ECE3] to-[#E9E1D8] flex flex-col items-center justify-center p-6">
+            <svg viewBox="0 0 220 220" class="w-44 h-44" aria-hidden="true">
+              <rect x="46" y="66" width="98" height="104" rx="16" fill="#1D232C" stroke="#D4A373" stroke-width="2.4"/>
+              <path d="M144 86 H165 A18 18 0 0 1 183 104 V124 A18 18 0 0 1 165 142 H144" fill="none" stroke="#D4A373" stroke-width="2.4"/>
+              <path d="M76 48 Q82 36 76 24" fill="none" stroke="#D4A373" stroke-width="2" stroke-linecap="round"/>
+              <path d="M104 48 Q110 36 104 24" fill="none" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round"/>
+              <text x="95" y="124" text-anchor="middle" fill="#F5F2EB" font-family="Georgia, serif" font-style="italic" font-size="15" font-weight="bold">${brand}</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-sapphire font-semibold mt-1">${escapeHtml(product.subtype || 'Taza')}</span>
+          </div>
+        `;
+      }
+
+      if (preset === 'accessory-key') {
+        return `
+          <div class="w-full h-full bg-gradient-to-b from-[#F0E9DF] to-[#E6DED4] flex flex-col items-center justify-center p-6">
+            <svg viewBox="0 0 220 220" class="w-44 h-44" aria-hidden="true">
+              <circle cx="110" cy="54" r="18" fill="none" stroke="#D4A373" stroke-width="3.5"/>
+              <rect x="74" y="76" width="72" height="104" rx="18" fill="#1D232C" stroke="#2E8B6B" stroke-width="2.2"/>
+              <circle cx="110" cy="96" r="5" fill="#D4A373"/>
+              <text x="110" y="138" text-anchor="middle" fill="#F5F2EB" font-family="Georgia, serif" font-style="italic" font-size="15" font-weight="bold">${brand}</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-emeralddeep font-semibold mt-1">${escapeHtml(product.subtype || 'Accesorio')}</span>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="w-full h-full bg-gradient-to-b from-[#F2EADF] to-[#E7DED4] flex flex-col items-center justify-center p-6">
+          <svg viewBox="0 0 220 220" class="w-44 h-44" aria-hidden="true">
+            <path d="M68 42 L90 28 Q110 40 130 28 L152 42 L192 72 L170 104 L148 88 L148 188 L72 188 L72 88 L50 104 L28 72 Z" fill="#1D232C" stroke="#D4A373" stroke-width="2.3" stroke-linejoin="round"/>
+            <path d="M90 28 Q110 44 130 28" fill="none" stroke="#D4A373" stroke-width="2.2" stroke-linecap="round"/>
+            <text x="110" y="114" text-anchor="middle" fill="#F5F2EB" font-family="Georgia, serif" font-style="italic" font-size="16" font-weight="bold">${brand}</text>
+            <line x1="92" y1="124" x2="128" y2="124" stroke="#D4A373" stroke-width="1.4"/>
+          </svg>
+          <span class="text-[11px] uppercase tracking-widest text-champagne font-semibold mt-1">${escapeHtml(product.subtype || 'Ropa')}</span>
+        </div>
+      `;
+    }
+
+    function renderProducts() {
+      syncCardSizes();
+      const grid = document.getElementById('productsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countText = document.getElementById('productsCountText');
+      const query = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      const sortMode = document.getElementById('sortSelect').value;
+
+      let items = state.products.filter((p) => {
+        const matchCat = state.selectedCategory === 'Todo' || p.category === state.selectedCategory;
+        const matchSub = state.selectedSubtype === 'Todos' || (p.subtype || '').toLowerCase() === state.selectedSubtype.toLowerCase();
+        const matchQuery =
+          !query ||
+          (p.name && p.name.toLowerCase().includes(query)) ||
+          (p.subtype && p.subtype.toLowerCase().includes(query)) ||
+          (p.description && p.description.toLowerCase().includes(query)) ||
+          (p.category && p.category.toLowerCase().includes(query));
+        return matchCat && matchSub && matchQuery;
+      });
+
+      if (sortMode === 'price-asc') {
+        items = [...items].sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+      } else if (sortMode === 'price-desc') {
+        items = [...items].sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+      }
+
+      const subPart = state.selectedSubtype !== 'Todos' ? ` · ${state.selectedSubtype}` : '';
+      countText.textContent = `${items.length} ${items.length === 1 ? 'pieza' : 'piezas'} · ${state.selectedCategory}${subPart}`;
+
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      const renderProductCard = (prod) => {
+        const activeSize = state.cardSizes[prod.id] || (prod.sizes && prod.sizes[0]) || 'Única';
+        const sizesChips = (prod.sizes || ['Única'])
+          .map((sz) => {
+            const isSel = activeSize === sz;
+            return `
+              <button
+                type="button"
+                onclick="selectCardSize('${escapeHtml(prod.id)}', '${escapeHtml(sz)}')"
+                class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition ${
+                  isSel
+                    ? 'bg-champagne text-obsidian border-champagne'
+                    : 'bg-obsidian text-mutedstone border-hairline hover:text-ivory'
+                }"
+              >
+                ${escapeHtml(sz)}
+              </button>
+            `;
+          })
+          .join('');
+
+        const labelText = prod.subtype ? `${prod.category} · ${prod.subtype}` : prod.category;
+        const editorBar = state.vendorUnlocked
+          ? `
+            <div class="pt-3 mt-1 border-t border-hairline flex items-center justify-between gap-2 text-xs">
+              <div class="flex items-center gap-1">
+                <button type="button" onclick="moveProductOrder('${escapeHtml(prod.id)}', -1)" class="px-2 py-1 rounded-lg bg-obsidian border border-hairline text-mutedstone hover:text-ivory" title="Subir">↑</button>
+                <button type="button" onclick="moveProductOrder('${escapeHtml(prod.id)}', 1)" class="px-2 py-1 rounded-lg bg-obsidian border border-hairline text-mutedstone hover:text-ivory" title="Bajar">↓</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="openProductModal('${escapeHtml(prod.id)}')" class="text-champagne hover:underline font-semibold">Editar</button>
+                <button type="button" onclick="deleteProduct('${escapeHtml(prod.id)}')" class="text-terracotta hover:underline font-semibold">Borrar</button>
+              </div>
+            </div>
+          `
+          : '';
+
+        return `
+          <article class="rounded-2xl bg-elevated border border-hairline hover:border-hairlinestrong shadow-card transition flex flex-col overflow-hidden">
+            <div class="relative aspect-[4/4.3] w-full overflow-hidden bg-surface cursor-pointer group" onclick="openQuickView('${escapeHtml(prod.id)}')">
+              ${renderProductArtwork(prod)}
+              ${
+                !prod.available
+                  ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-obsidian/90 text-mutedstone border border-hairline text-[11px] font-bold">Agotado</span>`
+                  : getDiscountPercent(prod)
+                  ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-terracotta text-white text-[11px] font-extrabold">-${getDiscountPercent(prod)}% PROMO</span>`
+                  : prod.badge
+                  ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold ${getBadgeClasses(prod.badge)}">${escapeHtml(prod.badge)}</span>`
+                  : ''
+              }
+              <button
+                type="button"
+                onclick="event.stopPropagation(); openQuickView('${escapeHtml(prod.id)}')"
+                class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-obsidian/85 backdrop-blur-sm border border-hairline text-[11px] font-semibold text-ivory group-hover:border-champagne transition"
+              >Inspeccionar</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between gap-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold ${getCategoryTagClasses(prod.category)}">${escapeHtml(labelText)}</span>
+                  ${renderProductPrice(prod)}
+                </div>
+                <h3 onclick="openQuickView('${escapeHtml(prod.id)}')" class="font-serif text-xl sm:text-2xl font-semibold text-ivory leading-snug cursor-pointer hover:text-champagne transition">${escapeHtml(prod.name)}</h3>
+                <p class="text-xs text-mutedstone line-clamp-2 leading-relaxed">${escapeHtml(prod.description || '')}</p>
+              </div>
+              <div class="space-y-2.5">
+                <div class="flex flex-wrap gap-1.5">${sizesChips}</div>
+                <button
+                  type="button"
+                  ${!prod.available ? 'disabled' : ''}
+                  onclick="quickAddToCart('${escapeHtml(prod.id)}')"
+                  class="w-full py-2.5 px-4 rounded-full text-xs font-bold transition ${
+                    prod.available
+                      ? 'bg-champagne hover:bg-champagnedark active:scale-[0.99] text-obsidian'
+                      : 'bg-surface text-mutedstone/50 border border-hairline cursor-not-allowed'
+                  }"
+                >${prod.available ? 'Agregar a la bolsa' : 'No disponible'}</button>
+              </div>
+              ${editorBar}
+            </div>
+          </article>
+        `;
+      };
+
+      if (state.selectedCategory === 'Todo') {
+        const categoryOrder = ['Ropa', 'Tazas', 'Accesorios'];
+        const orderedCategories = [
+          ...categoryOrder,
+          ...Array.from(new Set(items.map((p) => p.category).filter((cat) => !categoryOrder.includes(cat)))),
+        ];
+        grid.className = 'space-y-14';
+        grid.innerHTML = orderedCategories.map((category) => {
+          const categoryItems = items.filter((item) => item.category === category);
+          if (!categoryItems.length) return '';
+          const categoryIntro = {
+            Ropa: 'Prendas y siluetas para llevar tu estilo.',
+            Tazas: 'Piezas para regalar, recordar y disfrutar cada día.',
+            Accesorios: 'Pequeños detalles con un toque personal.',
+          }[category] || 'Descubre esta selección de AMSEL.';
+          return `
+            <section class="catalog-category space-y-5" aria-label="${escapeHtml(category)}">
+              <div class="flex items-end justify-between gap-4 border-b border-hairline pb-4">
+                <div class="space-y-1">
+                  <p class="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] text-champagne font-bold">Colección AMSEL</p>
+                  <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-ivory leading-none">${escapeHtml(category)}</h2>
+                  <p class="text-xs sm:text-sm text-mutedstone pt-1">${escapeHtml(categoryIntro)}</p>
+                </div>
+                <span class="shrink-0 text-[11px] sm:text-xs text-mutedstone bg-surface border border-hairline px-3 py-1.5 rounded-full">${categoryItems.length} ${categoryItems.length === 1 ? 'pieza' : 'piezas'}</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                ${categoryItems.map(renderProductCard).join('')}
+              </div>
+            </section>
+          `;
+        }).join('');
+      } else {
+        grid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8';
+        grid.innerHTML = items.map(renderProductCard).join('');
+      }
+    }
+
+    function selectCardSize(productId, size) {
+      state.cardSizes[productId] = size;
+      renderProducts();
+    }
+
+    function quickAddToCart(productId) {
+      const prod = state.products.find((p) => p.id === productId);
+      if (!prod || !prod.available) return;
+      const size = state.cardSizes[productId] || (prod.sizes && prod.sizes[0]) || 'Única';
+      addItemToBag(prod, size, '');
+    }
+
+    // =========================================================================
+    // MODAL DE DETALLE CON VARIANTE Y NOTA DE ESTAMPADO / PERSONALIZACIÓN
+    // =========================================================================
+    function openQuickView(productId) {
+      const prod = state.products.find((p) => p.id === productId);
+      if (!prod) return;
+
+      const defaultSize = state.cardSizes[productId] || (prod.sizes && prod.sizes[0]) || 'Única';
+      const sizesHtml = (prod.sizes || ['Única'])
+        .map((sz, idx) => {
+          const checked = sz === defaultSize || (idx === 0 && !(prod.sizes || []).includes(defaultSize));
+          return `
+            <button
+              type="button"
+              data-qv-size="${escapeHtml(sz)}"
+              onclick="selectQuickViewSize(this)"
+              class="qv-size-btn px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${
+                checked ? 'bg-champagne text-obsidian border-champagne' : 'bg-obsidian text-mutedstone border-hairline hover:text-ivory'
+              }"
+            >
+              ${escapeHtml(sz)}
+            </button>
+          `;
+        })
+        .join('');
+
+      document.getElementById('quickViewContent').innerHTML = `
+        <div class="flex items-start justify-between gap-3 pb-4 border-b border-hairline">
+          <div>
+            <span class="inline-block px-2.5 py-0.5 rounded-full border text-[11px] font-semibold mb-1 ${getCategoryTagClasses(prod.category)}">
+              ${escapeHtml(prod.subtype ? `${prod.category} · ${prod.subtype}` : prod.category)}
+            </span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory leading-tight">${escapeHtml(prod.name)}</h2>
+          </div>
+          <button type="button" onclick="closeQuickView()" class="p-2 rounded-full bg-surface hover:bg-obsidian text-mutedstone hover:text-ivory">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-5">
+          <div class="aspect-[4/4.4] rounded-2xl overflow-hidden border border-hairline bg-surface">
+            ${renderProductArtwork(prod)}
+          </div>
+
+          <div class="flex flex-col justify-between gap-4">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-extrabold text-champagne">${renderProductPrice(prod)}</span>
+                <span class="text-xs font-semibold ${prod.available ? 'text-emeralddeep' : 'text-terracotta'}">
+                  ${prod.available ? 'Disponible' : 'Agotado'}
+                </span>
+              </div>
+
+              <p class="text-xs sm:text-sm text-mutedstone leading-relaxed">${escapeHtml(prod.description || '')}</p>
+
+              <div>
+                <label class="block text-xs font-semibold text-ivory mb-1.5">Selecciona talla o formato</label>
+                <div id="qvSizesGroup" class="flex flex-wrap gap-2">${sizesHtml}</div>
+              </div>
+
+              <div>
+                <label for="qvCustomNote" class="block text-xs font-semibold text-ivory mb-1.5">Nota de estampado, nombre o dedicatoria</label>
+                <input
+                  type="text"
+                  id="qvCustomNote"
+                  placeholder="Ej. Iniciales V.G. en pecho / Nombre en la taza"
+                  class="w-full px-3.5 py-2 rounded-xl bg-obsidian border border-hairline text-xs sm:text-sm text-ivory placeholder:text-mutedstone/60 focus:outline-none focus:border-champagne"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              ${!prod.available ? 'disabled' : ''}
+              onclick="submitQuickViewToBag('${escapeHtml(prod.id)}')"
+              class="w-full py-3 px-5 rounded-full text-xs sm:text-sm font-bold transition ${
+                prod.available
+                  ? 'bg-champagne hover:bg-champagnedark text-obsidian'
+                  : 'bg-surface text-mutedstone/50 border border-hairline cursor-not-allowed'
+              }"
+            >
+              ${prod.available ? 'Agregar a la bolsa' : 'Agotado temporalmente'}
+            </button>
+          </div>
+        </div>
+      `;
+
+      const modal = document.getElementById('quickViewModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function selectQuickViewSize(btn) {
+      document.querySelectorAll('.qv-size-btn').forEach((b) => {
+        b.className = 'qv-size-btn px-3 py-1.5 rounded-xl text-xs font-semibold border transition bg-obsidian text-mutedstone border-hairline hover:text-ivory';
+      });
+      btn.className = 'qv-size-btn px-3 py-1.5 rounded-xl text-xs font-semibold border transition bg-champagne text-obsidian border-champagne';
+    }
+
+    function submitQuickViewToBag(productId) {
+      const prod = state.products.find((p) => p.id === productId);
+      if (!prod || !prod.available) return;
+      const selectedBtn = document.querySelector('#qvSizesGroup .qv-size-btn.bg-champagne');
+      const size = selectedBtn ? selectedBtn.getAttribute('data-qv-size') : (prod.sizes && prod.sizes[0]) || 'Única';
+      const customNote = (document.getElementById('qvCustomNote')?.value || '').trim();
+      state.cardSizes[productId] = size;
+      addItemToBag(prod, size, customNote);
+      closeQuickView();
+      openCartDrawer();
+    }
+
+    function closeQuickView() {
+      const modal = document.getElementById('quickViewModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // =========================================================================
+    // BOLSA DE COMPRAS, RESUMEN COPIABLE Y WHATSAPP
+    // =========================================================================
+    function addItemToBag(product, size, customNote) {
+      const key = `${product.id}__${size}__${customNote.toLowerCase()}`;
+      const existing = state.cart.find((item) => item.key === key);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({
+          key,
+          productId: product.id,
+          name: product.name,
+          category: product.category,
+          subtype: product.subtype || '',
+          price: getProductPrice(product),
+          originalPrice: getDiscountPercent(product) ? (Number(product.price) || 0) : null,
+          discountPercent: getDiscountPercent(product),
+          size,
+          customNote,
+          qty: 1,
+        });
+      }
+      saveCartToStorage();
+      renderCartDrawer();
+      showToast(`Agregado: ${product.name} (${size})`, 'success');
+    }
+
+    function changeCartQty(key, delta) {
+      const idx = state.cart.findIndex((i) => i.key === key);
+      if (idx === -1) return;
+      state.cart[idx].qty += delta;
+      if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+      saveCartToStorage();
+      renderCartDrawer();
+    }
+
+    function removeCartItem(key) {
+      state.cart = state.cart.filter((i) => i.key !== key);
+      saveCartToStorage();
+      renderCartDrawer();
+    }
+
+    function calculateCartSubtotal() {
+      return state.cart.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item.qty) || 1), 0);
+    }
+
+    function renderCartDrawer() {
+      const totalQty = state.cart.reduce((sum, i) => sum + (Number(i.qty) || 1), 0);
+      document.getElementById('cartCountBadge').textContent = String(totalQty);
+      document.getElementById('cartSubtotalText').textContent = formatMoney(calculateCartSubtotal());
+
+      const container = document.getElementById('cartItemsContainer');
+      const checkoutBox = document.getElementById('cartCheckoutBox');
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 space-y-2">
+            <p class="font-serif text-xl font-semibold text-ivory">Tu bolsa está vacía</p>
+            <p class="text-xs text-mutedstone">Selecciona ropa, tazas o accesorios del catálogo para armar tu pedido.</p>
+          </div>
+        `;
+        checkoutBox.classList.add('opacity-60');
+        return;
+      }
+
+      checkoutBox.classList.remove('opacity-60');
+      container.innerHTML = state.cart
+        .map((item) => `
+          <div class="rounded-2xl bg-surface border border-hairline p-3.5 space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h4 class="text-sm font-bold text-ivory leading-snug">${escapeHtml(item.name)}</h4>
+                <p class="text-[11px] text-mutedstone">Variante: <strong class="text-champagne">${escapeHtml(item.size)}</strong> · ${item.originalPrice ? `<span class="line-through">${formatMoney(item.originalPrice)}</span> <strong class="text-terracotta">${formatMoney(item.price)} c/u (-${item.discountPercent}%)</strong>` : `${formatMoney(item.price)} c/u`}</p>
+                ${item.customNote ? `<p class="text-[11px] text-emeralddeep font-medium mt-0.5">Personalización: "${escapeHtml(item.customNote)}"</p>` : ''}
+              </div>
+              <button type="button" onclick="removeCartItem('${escapeHtml(item.key)}')" class="text-mutedstone hover:text-terracotta text-xs font-semibold">
+                Quitar
+              </button>
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <div class="inline-flex items-center rounded-full border border-hairline bg-obsidian">
+                <button type="button" onclick="changeCartQty('${escapeHtml(item.key)}', -1)" class="px-2.5 py-1 text-xs font-bold text-ivory hover:text-champagne">−</button>
+                <span class="px-2.5 text-xs font-bold text-ivory">${item.qty}</span>
+                <button type="button" onclick="changeCartQty('${escapeHtml(item.key)}', 1)" class="px-2.5 py-1 text-xs font-bold text-ivory hover:text-champagne">+</button>
+              </div>
+              <span class="text-xs font-extrabold text-ivory">${formatMoney((Number(item.price) || 0) * item.qty)}</span>
+            </div>
+          </div>
+        `)
+        .join('');
+    }
+
+    function openCartDrawer() {
+      const drawer = document.getElementById('cartDrawer');
+      drawer.classList.remove('hidden');
+      drawer.classList.add('flex');
+    }
+
+    function closeCartDrawer() {
+      const drawer = document.getElementById('cartDrawer');
+      drawer.classList.add('hidden');
+      drawer.classList.remove('flex');
+    }
+
+    function buildFormattedOrderText() {
+      if (state.cart.length === 0) return '';
+      const brand = (state.settings.brandName || 'AMSEL').trim();
+      const customerName = (document.getElementById('customerName')?.value || '').trim();
+      const customerNote = (document.getElementById('customerNote')?.value || '').trim();
+
+      const lines = [
+        `Hola ${brand}, quiero realizar este pedido:`,
+        '',
+      ];
+
+      state.cart.forEach((item, index) => {
+        const lineTotal = formatMoney((Number(item.price) || 0) * item.qty);
+        const notePart = item.customNote ? ` [Nota: ${item.customNote}]` : '';
+        lines.push(`${index + 1}. ${item.name} (${item.size})${notePart} x${item.qty} — ${lineTotal}`);
+      });
+
+      lines.push('');
+      lines.push(`Subtotal: ${formatMoney(calculateCartSubtotal())}`);
+      if (customerName) lines.push(`Cliente: ${customerName}`);
+      if (customerNote) lines.push(`Observaciones: ${customerNote}`);
+
+      return lines.join('\n');
+    }
+
+    function copyOrderSummary() {
+      if (state.cart.length === 0) {
+        showToast('Agrega al menos una pieza a la bolsa.', 'error');
+        return;
+      }
+      const text = buildFormattedOrderText();
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Resumen de pedido copiado', 'success');
+      } catch (e) {
+        showToast('No se pudo copiar el resumen.', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function sendOrderViaWhatsApp() {
+      if (state.cart.length === 0) {
+        showToast('Tu bolsa está vacía.', 'error');
+        return;
+      }
+      const customerName = (document.getElementById('customerName')?.value || '').trim();
+      if (!customerName) {
+        showToast('Escribe tu nombre antes de enviar por WhatsApp.', 'error');
+        document.getElementById('customerName')?.focus();
+        return;
+      }
+
+      const phone = (state.settings.whatsapp || '').replace(/\D/g, '');
+      if (!phone) {
+        showToast('Configura un número de WhatsApp en el Editor AMSEL.', 'error');
+        return;
+      }
+
+      const message = buildFormattedOrderText();
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    // =========================================================================
+    // EDITOR AMSEL: PIN, CAJÓN DE GESTIÓN, REORDENAR, CRUD Y RESPALDOS
+    // =========================================================================
+    function handleVendorButtonClick() {
+      if (state.vendorUnlocked) {
+        openEditorDrawer();
+      } else {
+        openPinModal();
+      }
+    }
+
+    function openPinModal() {
+      const modal = document.getElementById('pinModal');
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinErrorText').classList.add('hidden');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      setTimeout(() => document.getElementById('pinInput').focus(), 50);
+    }
+
+    function closePinModal() {
+      const modal = document.getElementById('pinModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function verifyPinSubmit(event) {
+      event.preventDefault();
+      const entered = (document.getElementById('pinInput').value || '').trim();
+      const currentPin = String(state.settings.pin || DEFAULT_SETTINGS.pin).trim();
+
+      if (entered === currentPin) {
+        state.vendorUnlocked = true;
+        closePinModal();
+        syncVendorUI();
+        renderProducts();
+        openEditorDrawer();
+        showToast('Editor AMSEL desbloqueado', 'success');
+      } else {
+        document.getElementById('pinErrorText').classList.remove('hidden');
+      }
+    }
+
+    function lockVendorMode() {
+      state.vendorUnlocked = false;
+      closeEditorDrawer();
+      syncVendorUI();
+      renderProducts();
+      showToast('Editor AMSEL cerrado');
+    }
+
+    function openEditorDrawer() {
+      if (!state.vendorUnlocked) {
+        openPinModal();
+        return;
+      }
+      populateSettingsForm();
+      renderEditorItemList();
+      const drawer = document.getElementById('editorDrawer');
+      drawer.classList.remove('hidden');
+      drawer.classList.add('flex');
+    }
+
+    function closeEditorDrawer() {
+      const drawer = document.getElementById('editorDrawer');
+      drawer.classList.add('hidden');
+      drawer.classList.remove('flex');
+    }
+
+    function populateSettingsForm() {
+      document.getElementById('settingBrandName').value = state.settings.brandName || 'AMSEL';
+      document.getElementById('settingWhatsapp').value = state.settings.whatsapp || '';
+      document.getElementById('settingCurrency').value = state.settings.currency || 'COP $';
+      document.getElementById('settingPin').value = state.settings.pin || '1234';
+      document.getElementById('settingAccentMood').value = state.settings.accentMood || 'champagne';
+      document.getElementById('settingTagline').value = state.settings.tagline || '';
+      document.getElementById('settingSubtitle').value = state.settings.subtitle || '';
+    }
+
+    function syncVendorUI() {
+      const banner = document.getElementById('vendorActiveBanner');
+      const hint = document.getElementById('vendorStockHint');
+      const label = document.getElementById('vendorBtnLabel');
+
+      if (state.vendorUnlocked) {
+        banner.classList.remove('hidden');
+        hint.classList.remove('hidden');
+        label.textContent = 'Estudio AMSEL';
+      } else {
+        banner.classList.add('hidden');
+        hint.classList.add('hidden');
+        label.textContent = 'Editor AMSEL';
+      }
+    }
+
+    function saveStoreSettings(event) {
+      event.preventDefault();
+      const brandName = (document.getElementById('settingBrandName').value || '').trim() || 'AMSEL';
+      const whatsapp = (document.getElementById('settingWhatsapp').value || '').trim();
+      const currency = (document.getElementById('settingCurrency').value || '').trim() || 'COP $';
+      const pin = (document.getElementById('settingPin').value || '').trim();
+      const accentMood = document.getElementById('settingAccentMood').value || 'champagne';
+      const tagline = (document.getElementById('settingTagline').value || '').trim();
+      const subtitle = (document.getElementById('settingSubtitle').value || '').trim();
+
+      if (pin.length < 4) {
+        showToast('El PIN debe tener al menos 4 caracteres.', 'error');
+        return;
+      }
+
+      state.settings = {
+        brandName,
+        whatsapp,
+        currency,
+        pin,
+        accentMood,
+        tagline: tagline || DEFAULT_SETTINGS.tagline,
+        subtitle: subtitle || DEFAULT_SETTINGS.subtitle,
+      };
+
+      saveSettingsToStorage();
+      renderBrandTexts();
+      renderProducts();
+      renderCartDrawer();
+      showToast('Ajustes de AMSEL guardados', 'success');
+    }
+
+    function renderEditorItemList() {
+      const listEl = document.getElementById('editorItemList');
+      if (!listEl) return;
+
+      listEl.innerHTML = state.products
+        .map((prod, idx) => `
+          <div class="p-3 rounded-xl bg-obsidian border border-hairline text-xs space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <p class="font-semibold text-ivory truncate">${escapeHtml(prod.name)}</p>
+                <p class="text-[11px] text-mutedstone">${escapeHtml(prod.category)} · ${escapeHtml(prod.subtype || '')} · ${renderProductPrice(prod)}</p>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" ${idx === 0 ? 'disabled' : ''} onclick="moveProductOrder('${escapeHtml(prod.id)}', -1)" class="px-2 py-1 rounded bg-elevated border border-hairline text-mutedstone hover:text-ivory disabled:opacity-30">↑</button>
+                <button type="button" ${idx === state.products.length - 1 ? 'disabled' : ''} onclick="moveProductOrder('${escapeHtml(prod.id)}', 1)" class="px-2 py-1 rounded bg-elevated border border-hairline text-mutedstone hover:text-ivory disabled:opacity-30">↓</button>
+                <button type="button" onclick="openProductModal('${escapeHtml(prod.id)}')" class="px-2.5 py-1 rounded bg-elevated border border-hairline text-champagne font-semibold">Editar</button>
+                <button type="button" onclick="deleteProduct('${escapeHtml(prod.id)}')" class="px-2 py-1 rounded bg-elevated border border-hairline text-terracotta font-semibold">×</button>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 pt-1 border-t border-hairline">
+              <span class="text-[11px] text-mutedstone">Descuento %</span>
+              <input id="discount_${escapeHtml(prod.id)}" type="number" min="0" max="90" step="1" value="${getDiscountPercent(prod)}" class="w-16 px-2 py-1 rounded-lg bg-elevated border border-hairline text-ivory text-xs" aria-label="Porcentaje de descuento para ${escapeHtml(prod.name)}" />
+              <button type="button" onclick="applyProductPromotion('${escapeHtml(prod.id)}')" class="px-3 py-1 rounded-full bg-terracotta text-white font-bold text-[11px] hover:opacity-90">${getDiscountPercent(prod) ? 'Actualizar promo' : 'Activar promo'}</button>
+              <span class="text-[10px] text-mutedstone ml-auto">0% la quita</span>
+            </div>
+          </div>
+        `)
+        .join('');
+    }
+
+    function applyProductPromotion(productId) {
+      const product = state.products.find((item) => item.id === productId);
+      const input = document.getElementById(`discount_${productId}`);
+      if (!product || !input) return;
+      const pct = Math.round(Number(input.value) || 0);
+      if (pct < 0 || pct > 90) {
+        showToast('El descuento debe estar entre 1% y 90%. Usa 0 para quitarlo.', 'error');
+        return;
+      }
+      product.discountPercent = pct;
+      saveProducts();
+      renderProducts();
+      renderEditorItemList();
+      showToast(pct ? `Promoción aplicada: ${pct}% menos en ${product.name}` : `Promoción retirada de ${product.name}`, 'success');
+    }
+
+    function moveProductOrder(productId, delta) {
+      const idx = state.products.findIndex((p) => p.id === productId);
+      if (idx === -1) return;
+      const target = idx + delta;
+      if (target < 0 || target >= state.products.length) return;
+      const copy = [...state.products];
+      const [moved] = copy.splice(idx, 1);
+      copy.splice(target, 0, moved);
+      state.products = copy;
+      saveProducts();
+      renderProducts();
+      renderEditorItemList();
+    }
+
+    function syncSubtypeSuggestions() {
+      const cat = document.getElementById('prodCategory').value;
+      const list = SUBTYPES_BY_CATEGORY[cat] || [];
+      document.getElementById('subtypeDatalist').innerHTML = list.map((s) => `<option value="${escapeHtml(s)}"></option>`).join('');
+      const subInput = document.getElementById('prodSubtype');
+      if (subInput && !subInput.value.trim() && list.length > 0) {
+        subInput.value = list[0];
+      }
+    }
+
+    function openProductModal(productId) {
+      const modal = document.getElementById('productModal');
+      const title = document.getElementById('productModalTitle');
+
+      if (productId) {
+        const prod = state.products.find((p) => p.id === productId);
+        if (!prod) return;
+        title.textContent = 'Editar Pieza';
+        document.getElementById('prodId').value = prod.id;
+        document.getElementById('prodName').value = prod.name || '';
+        document.getElementById('prodCategory').value = prod.category || 'Ropa';
+        syncSubtypeSuggestions();
+        document.getElementById('prodSubtype').value = prod.subtype || '';
+        document.getElementById('prodPrice').value = prod.price || 0;
+        document.getElementById('prodBadge').value = prod.badge || '';
+        document.getElementById('prodAccent').value = prod.accent || 'champagne';
+        document.getElementById('prodSizes').value = (prod.sizes || ['S', 'M', 'L', 'XL']).join(', ');
+        document.getElementById('prodImage').value = prod.image || '';
+        document.getElementById('prodDescription').value = prod.description || '';
+        document.getElementById('prodAvailable').checked = Boolean(prod.available);
+        modal.dataset.preset = prod.preset || 'tee-ivory';
+      } else {
+        title.textContent = 'Nueva Pieza';
+        document.getElementById('prodId').value = '';
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodCategory').value = state.selectedCategory !== 'Todo' ? state.selectedCategory : 'Ropa';
+        document.getElementById('prodSubtype').value = '';
+        syncSubtypeSuggestions();
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodBadge').value = '';
+        document.getElementById('prodAccent').value = 'champagne';
+        document.getElementById('prodSizes').value = document.getElementById('prodCategory').value === 'Tazas' ? '11 oz, 15 oz' : 'S, M, L, XL';
+        document.getElementById('prodImage').value = '';
+        document.getElementById('prodDescription').value = '';
+        document.getElementById('prodAvailable').checked = true;
+        modal.dataset.preset = document.getElementById('prodCategory').value === 'Tazas' ? 'mug-champagne' : 'tee-ivory';
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProductModal() {
+      const modal = document.getElementById('productModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function applyPresetVisual(presetKey) {
+      const modal = document.getElementById('productModal');
+      modal.dataset.preset = presetKey;
+      document.getElementById('prodImage').value = '';
+      showToast('Ilustración SVG seleccionada');
+    }
+
+    function handleProductImageFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Selecciona un archivo de imagen válido.', 'error');
+        return;
+      }
+      if (file.size > 1600000) {
+        showToast('Usa una imagen menor a 1.6 MB para un guardado ágil.', 'error');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('prodImage').value = e.target.result || '';
+        showToast('Imagen cargada', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProductSubmit(event) {
+      event.preventDefault();
+      const modal = document.getElementById('productModal');
+      const existingId = document.getElementById('prodId').value;
+      const name = (document.getElementById('prodName').value || '').trim();
+      const category = document.getElementById('prodCategory').value;
+      const subtype = (document.getElementById('prodSubtype').value || '').trim();
+      const price = Number(document.getElementById('prodPrice').value) || 0;
+      const badge = document.getElementById('prodBadge').value || '';
+      const accent = document.getElementById('prodAccent').value || 'champagne';
+      const sizes = (document.getElementById('prodSizes').value || 'Única')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const image = (document.getElementById('prodImage').value || '').trim();
+      const description = (document.getElementById('prodDescription').value || '').trim();
+      const available = document.getElementById('prodAvailable').checked;
+      const preset = modal.dataset.preset || (category === 'Tazas' ? 'mug-champagne' : 'tee-ivory');
+
+      if (!name) {
+        showToast('Ingresa un nombre para la pieza.', 'error');
+        return;
+      }
+
+      const finalSizes = sizes.length > 0 ? sizes : ['Única'];
+      const finalSubtype = subtype || (SUBTYPES_BY_CATEGORY[category] ? SUBTYPES_BY_CATEGORY[category][0] : 'General');
+
+      if (existingId) {
+        const idx = state.products.findIndex((p) => p.id === existingId);
+        if (idx !== -1) {
+          state.products[idx] = {
+            ...state.products[idx],
+            name,
+            category,
+            subtype: finalSubtype,
+            price,
+            badge,
+            accent,
+            sizes: finalSizes,
+            image,
+            preset,
+            description,
+            available,
+          };
+          state.cardSizes[existingId] = finalSizes[0];
+        }
+        showToast('Pieza actualizada', 'success');
+      } else {
+        const newId = `amsel-${Date.now()}`;
+        state.products.unshift({
+          id: newId,
+          name,
+          category,
+          subtype: finalSubtype,
+          price,
+          badge,
+          accent,
+          sizes: finalSizes,
+          image,
+          preset,
+          description,
+          available,
+        });
+        state.cardSizes[newId] = finalSizes[0];
+        showToast('Pieza agregada', 'success');
+      }
+
+      saveProducts();
+      closeProductModal();
+      renderSubtypePills();
+      renderProducts();
+      renderEditorItemList();
+    }
+
+    function deleteProduct(productId) {
+      state.products = state.products.filter((p) => p.id !== productId);
+      saveProducts();
+      renderSubtypePills();
+      renderProducts();
+      renderEditorItemList();
+      showToast('Pieza eliminada');
+    }
+
+    function resetDemoCatalog() {
+      state.products = [...DEFAULT_PRODUCTS];
+      state.settings = { ...DEFAULT_SETTINGS };
+      saveProducts();
+      saveSettingsToStorage();
+      syncCardSizes();
+      renderBrandTexts();
+      populateSettingsForm();
+      renderSubtypePills();
+      renderProducts();
+      renderEditorItemList();
+      showToast('Catálogo demo restaurado', 'success');
+    }
+
+    // =========================================================================
+    // EXPORTAR JSON, IMPORTAR JSON, DESCARGAR HTML Y COMPARTIR
+    // =========================================================================
+    function exportCatalogJson() {
+      const payload = {
+        brand: state.settings.brandName || 'AMSEL',
+        exportedAt: new Date().toISOString(),
+        settings: state.settings,
+        products: state.products,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'amsel-catalogo-respaldo.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Respaldo JSON descargado', 'success');
+    }
+
+    function handleImportJson(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed.products) && parsed.products.length > 0) {
+            state.products = parsed.products;
+            saveProducts();
+          }
+          if (parsed.settings && typeof parsed.settings === 'object') {
+            state.settings = { ...DEFAULT_SETTINGS, ...parsed.settings };
+            saveSettingsToStorage();
+          }
+          syncCardSizes();
+          renderBrandTexts();
+          populateSettingsForm();
+          renderSubtypePills();
+          renderProducts();
+          renderEditorItemList();
+          showToast('Respaldo JSON importado', 'success');
+        } catch (err) {
+          showToast('Archivo JSON no válido.', 'error');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function downloadHtmlBackup() {
+      let htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const replaceConstant = (name, value, nextDeclaration) => {
+        const marker = `const ${name} = `;
+        const start = htmlContent.indexOf(marker);
+        if (start === -1) return;
+        const valueStart = start + marker.length;
+        const end = htmlContent.indexOf(nextDeclaration, valueStart);
+        if (end === -1) return;
+        const previousSemicolon = htmlContent.lastIndexOf(';', end);
+        htmlContent = htmlContent.slice(0, valueStart) + JSON.stringify(value, null, 2) + ';' + htmlContent.slice(previousSemicolon + 1);
+      };
+      replaceConstant('DEFAULT_SETTINGS', state.settings, 'const DEFAULT_PRODUCTS = ');
+      replaceConstant('DEFAULT_PRODUCTS', state.products, 'let state = {');
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'amsel-catalogo.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Archivo HTML descargado', 'success');
+    }
+
+    function openShareModal() {
+      const modal = document.getElementById('shareModal');
+      document.getElementById('shareUrlInput').value = window.location.href || 'amsel-catalogo.html';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeShareModal() {
+      const modal = document.getElementById('shareModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function copyShareLink() {
+      const input = document.getElementById('shareUrlInput');
+      if (!input) return;
+      input.select();
+      input.setSelectionRange(0, input.value.length);
+      try {
+        document.execCommand('copy');
+        showToast('Enlace copiado', 'success');
+      } catch (e) {
+        showToast('No se pudo copiar el enlace.', 'error');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadInitialState();
+      renderBrandTexts();
+      renderSubtypePills();
+      renderProducts();
+      renderCartDrawer();
+      syncVendorUI();
+    });
+  </script>
+</body>
+</html>
