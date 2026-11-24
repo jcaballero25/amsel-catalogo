@@ -1786,7 +1786,7 @@
       event.preventDefault();
       adminLogoTapCount += 1;
       clearTimeout(adminLogoTapTimer);
-      adminLogoTapTimer = setTimeout(() => { adminLogoTapCount = 0; }, 1800);
+      adminLogoTapTimer = setTimeout(() => { adminLogoTapCount = 0; }, 15000);
       if (adminLogoTapCount >= 5) {
         adminLogoTapCount = 0;
         clearTimeout(adminLogoTapTimer);
